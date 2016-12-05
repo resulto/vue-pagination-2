@@ -85,14 +85,18 @@ prevChunk: function() {
   return this.setChunk(-1);
 },
 setChunk: function(direction) {
-  this.setPage((((this.currentChunk -1) + direction) * this.chunk) + 1);
+  if (direction === -1) {
+    this.setPage(1);
+  } else {
+    this.setPage(this.totalPages);
+  }
 },
 allowedPage: function(page) {
   return page>=1 && page<=this.totalPages;
 },
 allowedChunk: function(direction) {
-  return (direction==1 && this.currentChunk<this.totalChunks)
-  ||  (direction==-1 && this.currentChunk>1);
+  return (direction==1 && this.page<this.totalPages)
+  ||  (direction==-1 && this.page>1);
 },
 allowedPageClass: function(direction) {
   return this.allowedPage(direction)?'':'disabled';
